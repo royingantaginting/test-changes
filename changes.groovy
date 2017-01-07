@@ -1,16 +1,15 @@
-@NonCPS
-def getFilesChange() {
-    def filesChange = []
-
-    def changeLogSets = currentBuild.rawBuild.changeSets
-	List items = changeLogSets.getItems()
-	def affectedFiles = items.collect { it.paths }
-	filesChange = affectedFiles.flatten().findResults
-	{
-       it.path
-	}.sort().unique()
-
-    return filesChange
+@NoNCPS
+def getFilesChange(){
+	def filesChange = []
+	def changeLogSets = currentBuild.rawBuild.changeSets
+	for (int i = 0; i < changeLogSets.size(); i++) {
+		def entries = changeLogSets[i].items
+		for (int j = 0; j < entries.length; j++) {
+			def entry = entries[j]
+			filesChange.addAll(entry.affectedFiles)
+		}
+	}
+	return filesChange
 }
 
 def getFilesChangeAsString(){
