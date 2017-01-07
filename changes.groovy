@@ -1,4 +1,4 @@
-@NoNCPS
+@NonCPS
 def getFilesChange(){
 	def filesChange = []
 	def changeLogSets = currentBuild.rawBuild.changeSets
