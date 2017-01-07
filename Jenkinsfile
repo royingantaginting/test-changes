@@ -9,7 +9,8 @@ node ('AWS || swarm'){
         }
  
         stage("Build"){
-            load 'changes.groovy'
+            def changes = load 'changes.groovy'
+            env.FILE_CHANGES = changes.getFilesChangeAsString
             sh 'echo $FILES_CHANGE_LIST'
         }
       

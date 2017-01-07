@@ -1,15 +1,21 @@
-import hudson.model.*
-import hudson.util.*
-import hudson.scm.*
+@NonCPS
+def getChangeFiles() {
+    def changeFiles = []
 
-
-def changeSet= build.getChangeSet()
-List items = changeSet.getItems()
-def affectedFiles = items.collect { it.paths }
-def fileNames = affectedFiles.flatten().findResults
-{
+    def changeLogSets = currentBuild.rawBuild.changeSets
+	List items = changeLogSets.getItems()
+	def affectedFiles = items.collect { it.paths }
+	changeFiles = affectedFiles.flatten().findResults
+	{
        it.path
-}.sort().unique()
+	}.sort().unique()
 
-env.FILES_CHANGE_LIST = fileNames.join(" ")
-println env.FILES_CHANGE_LIST
+    return changeFiles
+}
+
+def getChangeFilesAsString(){
+    def changeFiles = getChangeFiles()
+    return changeFiles.join(" ")
+}
+
+return this
