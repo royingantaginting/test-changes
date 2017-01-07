@@ -11,5 +11,5 @@ def fileNames = affectedFiles.flatten().findResults
        it.path
 }.sort().unique()
 
-env.PRINT_CHANGES_LIST = fileNames.join(" ")
-println env.PRINT_CHANGES_LIST
+env.FILES_CHANGE_LIST = fileNames.join(" ")
+println env.FILES_CHANGE_LIST
